@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <main className="snap-y snap-mandatory h-screen overflow-y-auto scroll-smooth">
+      <main>
         <HeroSection />
         <Timeline />
         <StatsSection />

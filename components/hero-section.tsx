@@ -9,48 +9,47 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden snap-start">
-      {/* Background with gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      {/* Minimal gradient background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       </div>
 
-      {/* Animated background lines */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
-            style={{ top: `${20 + i * 15}%`, width: "100%" }}
-            initial={{ x: "-100%" }}
-            animate={{ x: "100%" }}
-            transition={{
-              duration: 8 + i * 2,
-              repeat: Infinity,
-              ease: "linear",
-              delay: i * 0.5,
-            }}
-          />
-        ))}
-      </div>
+      {/* Subtle animated accent */}
+      <motion.div
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full opacity-30"
+        style={{
+          background: "radial-gradient(circle, oklch(0.65 0.2 25 / 0.15) 0%, transparent 70%)",
+        }}
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.2, 0.3, 0.2],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
-          <span className="inline-block px-4 py-1.5 mb-4 text-xs font-medium tracking-wider uppercase text-primary border border-primary/30 rounded-full">
-            Цифровой Архив 2014 — 2026
+          <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium tracking-widest uppercase text-primary/80 border border-primary/20 rounded-full bg-primary/5">
+            Цифровой Архив
           </span>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-serif font-bold text-5xl sm:text-6xl md:text-7xl tracking-tight text-balance"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="font-serif font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight"
         >
           <span className="text-foreground">Дима</span>
           <br />
@@ -58,31 +57,31 @@ export function HeroSection() {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-4 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto text-pretty"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-6 text-lg text-muted-foreground font-light"
         >
           Полная интерактивная энциклопедия творчества
         </motion.p>
 
-        {/* Stats */}
+        {/* Compact Stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-10 grid grid-cols-3 gap-6 max-w-sm mx-auto"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-12 flex items-center justify-center gap-8 sm:gap-12"
         >
           {[
-            { value: "12+", label: "Лет творчества" },
-            { value: "500+", label: "Видео" },
-            { value: "10M+", label: "Подписчиков" },
+            { value: "12+", label: "лет" },
+            { value: "500+", label: "видео" },
+            { value: "10M+", label: "подписчиков" },
           ].map((stat, i) => (
             <div key={i} className="text-center">
-              <div className="font-serif font-bold text-xl sm:text-2xl text-foreground">
+              <div className="font-serif font-semibold text-2xl sm:text-3xl text-foreground">
                 {stat.value}
               </div>
-              <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
+              <div className="text-xs text-muted-foreground mt-1 uppercase tracking-wider">{stat.label}</div>
             </div>
           ))}
         </motion.div>
@@ -93,14 +92,14 @@ export function HeroSection() {
         onClick={scrollToTimeline}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-foreground transition-colors"
+        transition={{ delay: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground/50 hover:text-muted-foreground transition-colors"
       >
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ChevronDown className="w-6 h-6" />
+          <ChevronDown className="w-5 h-5" />
         </motion.div>
         <span className="sr-only">Прокрутить вниз</span>
       </motion.button>

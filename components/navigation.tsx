@@ -45,52 +45,50 @@ export function Navigation() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <span className="font-serif font-bold text-xl text-foreground">
+            <span className="font-serif font-bold text-lg text-foreground tracking-tight">
               MASLENNIKOV
             </span>
-            <span className="text-primary font-serif text-xl">ARCHIVE</span>
+            <span className="text-primary font-serif text-lg">ARCHIVE</span>
           </Link>
 
-          {/* Center - Search or Navigation */}
-          <div className="flex-1 flex justify-center px-4">
+          {/* Center Navigation with Search */}
+          <div className="hidden lg:flex items-center gap-1 flex-1 justify-center">
             <AnimatePresence mode="wait">
               {searchOpen ? (
                 <motion.form
                   key="search"
-                  initial={{ opacity: 0, scale: 0.95, width: 0 }}
-                  animate={{ opacity: 1, scale: 1, width: "100%" }}
-                  exit={{ opacity: 0, scale: 0.95, width: 0 }}
-                  transition={{ duration: 0.2 }}
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: 400 }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{ duration: 0.25 }}
                   onSubmit={handleSearch}
-                  className="w-full max-w-md"
+                  className="relative"
                 >
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <input
-                      ref={searchInputRef}
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      placeholder="Поиск по архиву..."
-                      className="w-full pl-10 pr-10 py-2 bg-secondary border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSearchOpen(false)
-                        setSearchQuery("")
-                      }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Поиск по архиву..."
+                    className="w-full pl-10 pr-10 py-2 bg-secondary/80 border border-border/50 rounded-full text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchOpen(false)
+                      setSearchQuery("")
+                    }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </motion.form>
               ) : (
                 <motion.div
@@ -98,13 +96,24 @@ export function Navigation() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="hidden lg:flex items-center gap-6"
+                  className="flex items-center gap-1"
                 >
+                  {/* Search button - positioned before nav items */}
+                  <button
+                    onClick={() => setSearchOpen(true)}
+                    className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-full transition-all mr-2"
+                  >
+                    <Search className="w-4 h-4" />
+                    <span>Поиск</span>
+                  </button>
+
+                  <div className="w-px h-4 bg-border/50 mx-2" />
+
                   {navItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                      className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-full transition-all"
                     >
                       {item.label}
                     </Link>
@@ -114,29 +123,52 @@ export function Navigation() {
             </AnimatePresence>
           </div>
 
-          {/* Right - Search button & Mobile Menu */}
-          <div className="flex items-center gap-4 flex-shrink-0">
-            {!searchOpen && (
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                onClick={() => setSearchOpen(true)}
-                className="p-2 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Search className="w-5 h-5" />
-                <span className="sr-only">Поиск</span>
-              </motion.button>
-            )}
+          {/* Mobile - Search & Menu */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <Search className="w-5 h-5" />
+              <span className="sr-only">Поиск</span>
+            </button>
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               <span className="sr-only">Меню</span>
             </button>
           </div>
         </div>
+
+        {/* Mobile Search Bar */}
+        <AnimatePresence>
+          {searchOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden overflow-hidden"
+            >
+              <form onSubmit={handleSearch} className="pb-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <input
+                    ref={searchInputRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Поиск по архиву..."
+                    className="w-full pl-10 pr-4 py-2.5 bg-secondary/80 border border-border/50 rounded-full text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  />
+                </div>
+              </form>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Mobile Navigation */}
@@ -146,15 +178,15 @@ export function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-background border-b border-border overflow-hidden"
+            className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border/50 overflow-hidden"
           >
-            <div className="px-4 py-4 space-y-2">
+            <div className="px-4 py-4 space-y-1">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="block py-2 text-muted-foreground hover:text-foreground transition-colors"
+                  className="block py-2.5 px-3 text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-lg transition-colors"
                 >
                   {item.label}
                 </Link>
