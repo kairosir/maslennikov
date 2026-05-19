@@ -14,8 +14,8 @@ export default function Home() {
         <Timeline />
         <StatsSection />
         <RecentUpdates />
+        <Footer />
       </main>
-      <Footer />
     </>
   )
 }
