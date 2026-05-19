@@ -38,8 +38,22 @@ const stats: Stat[] = [
 
 export function StatsSection() {
   return (
-    <section className="py-16 border-y border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="min-h-screen py-24 border-y border-border snap-start flex items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="font-serif font-bold text-3xl sm:text-4xl text-foreground">
+            Статистика канала
+          </h2>
+          <p className="mt-4 text-muted-foreground">
+            Цифры, которые говорят сами за себя
+          </p>
+        </motion.div>
+
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <motion.div
@@ -50,13 +64,13 @@ export function StatsSection() {
               transition={{ delay: index * 0.1 }}
               className="text-center"
             >
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary mb-4">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary mb-4">
                 {stat.icon}
               </div>
-              <div className="font-serif font-bold text-3xl sm:text-4xl text-foreground">
+              <div className="font-serif font-bold text-4xl sm:text-5xl text-foreground">
                 {stat.value}
               </div>
-              <div className="text-sm text-muted-foreground mt-1">
+              <div className="text-sm text-muted-foreground mt-2">
                 {stat.label}
               </div>
               {stat.trend && (

@@ -1,17 +1,18 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft, ChevronRight, Play, Image as ImageIcon, Calendar } from "lucide-react"
+import { Play, Image as ImageIcon, Calendar, X } from "lucide-react"
 
 interface TimelinePeriod {
   year: string
   title: string
   description: string
-  image: string
   color: string
   videos: number
   highlights: string[]
+  row: number
+  col: number
 }
 
 const timelineData: TimelinePeriod[] = [
@@ -19,129 +20,135 @@ const timelineData: TimelinePeriod[] = [
     year: "2014",
     title: "Начало",
     description: "Первые шаги на YouTube. Экспериментальные влоги и поиск своего стиля.",
-    image: "/placeholder-2014.jpg",
     color: "from-orange-500/20",
     videos: 12,
     highlights: ["Первое видео", "Формирование стиля", "Первые подписчики"],
+    row: 0,
+    col: 0,
   },
   {
     year: "2015",
     title: "Рост",
     description: "Развитие канала и первые вирусные видео. Эксперименты с форматами.",
-    image: "/placeholder-2015.jpg",
     color: "from-red-500/20",
     videos: 48,
     highlights: ["Вирусные видео", "Новые форматы", "Рост аудитории"],
+    row: 0,
+    col: 1,
   },
   {
     year: "2016",
     title: "Челленджи",
     description: "Эра челленджей и экстремального контента. Взрывной рост популярности.",
-    image: "/placeholder-2016.jpg",
     color: "from-amber-500/20",
     videos: 67,
     highlights: ["Челлендж-эра", "Экстрим", "Миллион подписчиков"],
+    row: 0,
+    col: 2,
   },
   {
     year: "2017",
     title: "Экстрим",
     description: "Экстремальные эксперименты и опасные видео. Пиковая популярность.",
-    image: "/placeholder-2017.jpg",
     color: "from-red-600/20",
     videos: 82,
     highlights: ["Опасные эксперименты", "Рекорды просмотров", "Коллаборации"],
+    row: 0,
+    col: 3,
   },
   {
     year: "2018",
     title: "Трансформация",
     description: "Переход к более серьезному контенту. Первые намеки на мистику.",
-    image: "/placeholder-2018.jpg",
     color: "from-orange-600/20",
     videos: 71,
     highlights: ["Смена формата", "Мистический контент", "Творческий рост"],
+    row: 1,
+    col: 0,
   },
   {
     year: "2019",
     title: "Abandoned",
     description: "Рождение легендарной серии Abandoned. Исследование заброшенных мест.",
-    image: "/placeholder-2019.jpg",
     color: "from-primary/20",
     videos: 58,
     highlights: ["Первый Abandoned", "Заброшенные места", "Новая эра"],
+    row: 1,
+    col: 1,
   },
   {
     year: "2020",
     title: "Расцвет",
     description: "Золотая эра Abandoned. Самые знаменитые выпуски и мировое признание.",
-    image: "/placeholder-2020.jpg",
     color: "from-red-500/20",
     videos: 45,
     highlights: ["Легендарные выпуски", "Международный успех", "10М подписчиков"],
+    row: 1,
+    col: 2,
   },
   {
     year: "2021",
     title: "Мистика",
     description: "Углубление в паранормальные исследования. Новые горизонты.",
-    image: "/placeholder-2021.jpg",
     color: "from-orange-500/20",
     videos: 42,
     highlights: ["Паранормальное", "Новые локации", "Документалистика"],
+    row: 1,
+    col: 3,
   },
   {
     year: "2022",
     title: "Музыка",
     description: "Музыкальные эксперименты и новые творческие направления.",
-    image: "/placeholder-2022.jpg",
     color: "from-amber-600/20",
     videos: 38,
     highlights: ["Музыкальные релизы", "Творческие коллабы", "Новые проекты"],
+    row: 2,
+    col: 0,
   },
   {
     year: "2023",
     title: "Эволюция",
     description: "Продолжение развития и новые амбициозные проекты.",
-    image: "/placeholder-2023.jpg",
     color: "from-red-600/20",
     videos: 35,
     highlights: ["Масштабные проекты", "Новые форматы", "Эволюция стиля"],
+    row: 2,
+    col: 1,
   },
   {
     year: "2024",
     title: "Новая эра",
     description: "Современный этап творчества. Инновации и эксперименты.",
-    image: "/placeholder-2024.jpg",
     color: "from-primary/20",
     videos: 32,
     highlights: ["Инновации", "Современный контент", "Новые технологии"],
+    row: 2,
+    col: 2,
   },
   {
     year: "2025",
     title: "Настоящее",
     description: "Текущие проекты и планы на будущее.",
-    image: "/placeholder-2025.jpg",
     color: "from-orange-500/20",
     videos: 18,
     highlights: ["Актуальные проекты", "Планы", "Будущее канала"],
+    row: 2,
+    col: 3,
   },
 ]
 
 export function Timeline() {
   const [selectedPeriod, setSelectedPeriod] = useState<TimelinePeriod | null>(null)
-  const scrollRef = useRef<HTMLDivElement>(null)
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = 300
-      scrollRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      })
-    }
-  }
+  // Group by rows
+  const rows = [0, 1, 2].map(rowIndex => 
+    timelineData.filter(item => item.row === rowIndex)
+  )
 
   return (
-    <section id="timeline" className="py-24 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="timeline" className="min-h-screen py-24 relative snap-start flex flex-col justify-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -153,90 +160,132 @@ export function Timeline() {
             Хронология
           </h2>
           <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            Путешествие через годы творчества. Выберите период, чтобы узнать больше.
+            Путешествие через годы творчества. Нажмите на год, чтобы узнать больше.
           </p>
         </motion.div>
 
-        {/* Timeline navigation */}
+        {/* Web/Grid Timeline */}
         <div className="relative">
-          <button
-            onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-background/80 backdrop-blur-sm border border-border rounded-full text-foreground hover:bg-secondary transition-colors hidden sm:block"
-          >
-            <ChevronLeft className="w-5 h-5" />
-            <span className="sr-only">Прокрутить влево</span>
-          </button>
+          {/* Connection lines - SVG web pattern */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
+            <defs>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.1" />
+                <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.1" />
+              </linearGradient>
+            </defs>
+          </svg>
 
-          <button
-            onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-background/80 backdrop-blur-sm border border-border rounded-full text-foreground hover:bg-secondary transition-colors hidden sm:block"
-          >
-            <ChevronRight className="w-5 h-5" />
-            <span className="sr-only">Прокрутить вправо</span>
-          </button>
-
-          {/* Timeline cards */}
-          <div
-            ref={scrollRef}
-            className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 px-2 sm:px-8"
-          >
-            {timelineData.map((period, index) => (
-              <motion.button
-                key={period.year}
+          <div className="relative z-10 space-y-4">
+            {rows.map((row, rowIndex) => (
+              <motion.div
+                key={rowIndex}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                onClick={() => setSelectedPeriod(selectedPeriod?.year === period.year ? null : period)}
-                className={`flex-shrink-0 w-40 sm:w-48 group relative overflow-hidden rounded-xl border transition-all duration-300 ${
-                  selectedPeriod?.year === period.year
-                    ? "border-primary bg-primary/10"
-                    : "border-border bg-card hover:border-primary/50"
-                }`}
+                transition={{ delay: rowIndex * 0.15 }}
+                className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"
               >
-                {/* Gradient background */}
-                <div className={`absolute inset-0 bg-gradient-to-b ${period.color} to-transparent opacity-50`} />
-                
-                <div className="relative p-4 text-left">
-                  <div className="font-serif font-bold text-2xl sm:text-3xl text-foreground mb-1">
-                    {period.year}
-                  </div>
-                  <div className="text-sm font-medium text-primary mb-2">
-                    {period.title}
-                  </div>
-                  <div className="text-xs text-muted-foreground line-clamp-2">
-                    {period.description}
-                  </div>
-                  <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                    <Play className="w-3 h-3" />
-                    <span>{period.videos} видео</span>
-                  </div>
-                </div>
+                {row.map((period, colIndex) => (
+                  <motion.button
+                    key={period.year}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: rowIndex * 0.1 + colIndex * 0.05 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    onClick={() => setSelectedPeriod(selectedPeriod?.year === period.year ? null : period)}
+                    className={`relative overflow-hidden rounded-xl border transition-all duration-300 ${
+                      selectedPeriod?.year === period.year
+                        ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+                        : "border-border bg-card hover:border-primary/50 hover:shadow-md"
+                    }`}
+                  >
+                    {/* Gradient background */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${period.color} to-transparent opacity-50`} />
+                    
+                    {/* Web connection dots */}
+                    <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary/30" />
+                    <div className="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full bg-primary/20" />
+                    
+                    <div className="relative p-4 text-left">
+                      <div className="font-serif font-bold text-2xl sm:text-3xl text-foreground mb-1">
+                        {period.year}
+                      </div>
+                      <div className="text-sm font-medium text-primary mb-1">
+                        {period.title}
+                      </div>
+                      <div className="text-xs text-muted-foreground line-clamp-2 hidden sm:block">
+                        {period.description}
+                      </div>
+                      <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+                        <Play className="w-3 h-3" />
+                        <span>{period.videos} видео</span>
+                      </div>
+                    </div>
 
-                {/* Active indicator */}
-                {selectedPeriod?.year === period.year && (
-                  <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-primary"
-                  />
-                )}
-              </motion.button>
+                    {/* Active indicator */}
+                    {selectedPeriod?.year === period.year && (
+                      <motion.div
+                        layoutId="activeIndicator"
+                        className="absolute bottom-0 left-0 right-0 h-1 bg-primary"
+                      />
+                    )}
+                  </motion.button>
+                ))}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Decorative web lines connecting the grid */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }}>
+            {/* Horizontal lines */}
+            {[0, 1].map(i => (
+              <motion.div
+                key={`h-${i}`}
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 + i * 0.2, duration: 0.8 }}
+                className="absolute left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"
+                style={{ top: `${33 + i * 33}%` }}
+              />
+            ))}
+            {/* Vertical lines */}
+            {[0, 1, 2].map(i => (
+              <motion.div
+                key={`v-${i}`}
+                initial={{ scaleY: 0 }}
+                whileInView={{ scaleY: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.7 + i * 0.15, duration: 0.8 }}
+                className="absolute top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-primary/15 to-transparent hidden sm:block"
+                style={{ left: `${25 + i * 25}%` }}
+              />
             ))}
           </div>
         </div>
 
-        {/* Expanded content */}
+        {/* Expanded content modal */}
         <AnimatePresence mode="wait">
           {selectedPeriod && (
             <motion.div
               key={selectedPeriod.year}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.3 }}
-              className="mt-8 overflow-hidden"
+              className="mt-8"
             >
-              <div className="bg-card border border-border rounded-2xl p-6 sm:p-8">
+              <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 relative">
+                <button
+                  onClick={() => setSelectedPeriod(null)}
+                  className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Left column - Info */}
                   <div>

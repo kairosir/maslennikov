@@ -4,14 +4,10 @@ import { Youtube, Instagram, Send } from "lucide-react"
 const footerLinks = {
   navigation: [
     { label: "Главная", href: "/" },
-    { label: "Хронология", href: "/timeline" },
-    { label: "Все видео", href: "/videos" },
-    { label: "Галерея", href: "/gallery" },
+    { label: "Биография", href: "/biography" },
   ],
   content: [
-    { label: "Биография", href: "/biography" },
     { label: "Факты", href: "/facts" },
-    { label: "Поиск", href: "/search" },
     { label: "О проекте", href: "/about" },
   ],
   social: [
@@ -23,7 +19,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="bg-card border-t border-border">
+    <footer className="bg-card border-t border-border snap-start">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}

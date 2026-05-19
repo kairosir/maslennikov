@@ -9,13 +9,13 @@ export default function Home() {
   return (
     <>
       <Navigation />
-      <main>
+      <main className="snap-y snap-mandatory h-screen overflow-y-auto scroll-smooth">
         <HeroSection />
         <Timeline />
         <StatsSection />
         <RecentUpdates />
+        <Footer />
       </main>
-      <Footer />
     </>
   )
 }
