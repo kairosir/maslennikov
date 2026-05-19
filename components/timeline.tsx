@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Play, Image as ImageIcon, Calendar, X } from "lucide-react"
+import { Play, Image as ImageIcon, Calendar, X, Radio } from "lucide-react"
 
 interface TimelinePeriod {
   year: string
@@ -104,7 +104,10 @@ export function Timeline() {
 
   return (
     <section id="timeline" className="py-24 lg:py-32 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Background grid */}
+      <div className="absolute inset-0 grid-bg opacity-50" />
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -112,17 +115,22 @@ export function Timeline() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="font-serif font-bold text-3xl sm:text-4xl text-foreground">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <Radio className="w-4 h-4 text-[#39FF14]" />
+            <span className="text-xs font-mono tracking-widest uppercase text-[#39FF14]">
+              TIMELINE DATA
+            </span>
+          </div>
+          <h2 className="font-serif font-bold text-3xl sm:text-4xl text-white">
             Хронология
           </h2>
-          <p className="mt-4 text-muted-foreground">
-            Нажмите на год, чтобы узнать больше
+          <p className="mt-4 text-[#A0A5B5]">
+            Нажмите на год для детальной информации
           </p>
         </motion.div>
 
         {/* Grid Timeline */}
         <div className="relative">
-          {/* Grid of years */}
           <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
             {timelineData.map((period, index) => (
               <motion.button
@@ -131,45 +139,33 @@ export function Timeline() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.03 }}
-                whileHover={{ y: -4 }}
+                whileHover={{ y: -4, scale: 1.02 }}
                 onClick={() => setSelectedPeriod(selectedPeriod?.year === period.year ? null : period)}
-                className={`relative p-4 sm:p-5 rounded-2xl border text-left transition-all duration-300 ${
+                className={`relative p-4 sm:p-5 rounded-xl text-left transition-all duration-300 ${
                   selectedPeriod?.year === period.year
-                    ? "border-primary bg-primary/5 shadow-lg shadow-primary/10"
-                    : "border-border/50 bg-card/50 hover:border-primary/30 hover:bg-card"
+                    ? "bg-[#1E2229] border-2 border-[#39FF14] shadow-[0_0_20px_rgba(57,255,20,0.2)]"
+                    : "bg-[#1E2229]/50 border border-[#2A2F38] hover:border-[#39FF14]/50 hover:shadow-[0_0_15px_rgba(57,255,20,0.1)]"
                 }`}
               >
-                <div className="font-serif font-bold text-2xl sm:text-3xl text-foreground mb-1">
+                <div className="font-mono font-bold text-2xl sm:text-3xl text-white mb-1">
                   {period.year}
                 </div>
-                <div className="text-xs sm:text-sm text-primary font-medium">
+                <div className="text-xs sm:text-sm text-[#39FF14] font-medium">
                   {period.title}
                 </div>
-                <div className="mt-2 text-xs text-muted-foreground">
+                <div className="mt-2 text-xs text-[#A0A5B5] font-mono">
                   {period.videos} видео
                 </div>
 
-                {/* Active dot */}
+                {/* Active indicator */}
                 {selectedPeriod?.year === period.year && (
                   <motion.div
-                    layoutId="activeDot"
-                    className="absolute top-3 right-3 w-2 h-2 rounded-full bg-primary"
+                    layoutId="activeIndicator"
+                    className="absolute top-3 right-3 w-2 h-2 rounded-full bg-[#39FF14] shadow-[0_0_10px_rgba(57,255,20,0.8)]"
                   />
                 )}
               </motion.button>
             ))}
-          </div>
-
-          {/* Decorative connecting lines */}
-          <div className="absolute inset-0 pointer-events-none -z-10">
-            <svg className="w-full h-full opacity-20" preserveAspectRatio="none">
-              <defs>
-                <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-                  <circle cx="50" cy="50" r="1" fill="currentColor" className="text-primary/30" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#grid)" />
-            </svg>
           </div>
         </div>
 
@@ -184,10 +180,13 @@ export function Timeline() {
               transition={{ duration: 0.3 }}
               className="mt-8"
             >
-              <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 sm:p-8 relative">
+              <div className="bg-[#1E2229] border border-[#2A2F38] rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+                {/* Decorative corner */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#39FF14]/5 to-transparent" />
+                
                 <button
                   onClick={() => setSelectedPeriod(null)}
-                  className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-secondary"
+                  className="absolute top-4 right-4 p-2 text-[#A0A5B5] hover:text-white hover:bg-[#252A32] transition-colors rounded-lg"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -196,20 +195,20 @@ export function Timeline() {
                   {/* Info */}
                   <div>
                     <div className="flex items-baseline gap-4 mb-4">
-                      <span className="font-serif font-bold text-5xl text-primary">
+                      <span className="font-mono font-bold text-5xl text-[#39FF14] glow-text">
                         {selectedPeriod.year}
                       </span>
                       <div>
-                        <h3 className="font-serif font-bold text-xl text-foreground">
+                        <h3 className="font-serif font-bold text-xl text-white">
                           {selectedPeriod.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-[#A0A5B5] font-mono">
                           {selectedPeriod.videos} видео
                         </p>
                       </div>
                     </div>
 
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                    <p className="text-[#A0A5B5] mb-6 leading-relaxed">
                       {selectedPeriod.description}
                     </p>
 
@@ -220,9 +219,9 @@ export function Timeline() {
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: i * 0.1 }}
-                          className="flex items-center gap-3 text-sm text-muted-foreground"
+                          className="flex items-center gap-3 text-sm text-[#A0A5B5]"
                         >
-                          <span className="w-1 h-1 rounded-full bg-primary" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#39FF14] shadow-[0_0_5px_rgba(57,255,20,0.8)]" />
                           {highlight}
                         </motion.div>
                       ))}
@@ -231,21 +230,21 @@ export function Timeline() {
                     <div className="flex flex-wrap gap-3">
                       <a
                         href={`/videos?year=${selectedPeriod.year}`}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-full hover:bg-primary/90 transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-[#39FF14] text-[#0A0B0D] text-sm font-medium rounded-lg hover:brightness-110 transition-all shadow-[0_0_15px_rgba(57,255,20,0.3)] hover:shadow-[0_0_25px_rgba(57,255,20,0.5)]"
                       >
                         <Play className="w-4 h-4" />
                         Видео
                       </a>
                       <a
                         href={`/gallery?year=${selectedPeriod.year}`}
-                        className="inline-flex items-center gap-2 px-4 py-2 border border-border text-foreground text-sm font-medium rounded-full hover:bg-secondary transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 border border-[#2A2F38] text-white text-sm font-medium rounded-lg hover:border-[#39FF14]/50 hover:bg-[#252A32] transition-colors"
                       >
                         <ImageIcon className="w-4 h-4" />
                         Галерея
                       </a>
                       <a
                         href={`/timeline/${selectedPeriod.year}`}
-                        className="inline-flex items-center gap-2 px-4 py-2 border border-border text-foreground text-sm font-medium rounded-full hover:bg-secondary transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 border border-[#2A2F38] text-white text-sm font-medium rounded-lg hover:border-[#39FF14]/50 hover:bg-[#252A32] transition-colors"
                       >
                         <Calendar className="w-4 h-4" />
                         Подробнее
@@ -255,7 +254,7 @@ export function Timeline() {
 
                   {/* Featured videos */}
                   <div>
-                    <h4 className="text-sm font-medium text-muted-foreground mb-4 uppercase tracking-wider">
+                    <h4 className="text-xs font-mono text-[#39FF14] mb-4 uppercase tracking-wider">
                       Популярные видео
                     </h4>
                     <div className="grid grid-cols-2 gap-3">
@@ -265,15 +264,15 @@ export function Timeline() {
                           initial={{ opacity: 0, scale: 0.95 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: i * 0.1 }}
-                          className="group relative aspect-video bg-secondary/50 rounded-xl overflow-hidden cursor-pointer border border-border/30"
+                          className="group relative aspect-video bg-[#252A32] rounded-lg overflow-hidden cursor-pointer border border-[#2A2F38] hover:border-[#39FF14]/50 transition-colors"
                         >
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-10 h-10 rounded-full bg-primary/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                              <Play className="w-4 h-4 text-primary-foreground ml-0.5" />
+                            <div className="w-10 h-10 rounded-full bg-[#39FF14] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-[0_0_15px_rgba(57,255,20,0.5)]">
+                              <Play className="w-4 h-4 text-[#0A0B0D] ml-0.5" />
                             </div>
                           </div>
-                          <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-background/80 to-transparent">
-                            <p className="text-xs text-foreground truncate">
+                          <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-[#121417] to-transparent">
+                            <p className="text-xs text-white truncate font-mono">
                               Видео #{i}
                             </p>
                           </div>

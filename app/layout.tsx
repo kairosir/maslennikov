@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Montserrat } from 'next/font/google'
+import { Inter, Montserrat, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -11,6 +11,11 @@ const inter = Inter({
 const montserrat = Montserrat({ 
   subsets: ['latin', 'cyrillic'],
   variable: '--font-montserrat'
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-mono'
 })
 
 export const metadata: Metadata = {
@@ -30,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ru" className={`${inter.variable} ${montserrat.variable} bg-background`}>
-      <body className="font-sans antialiased min-h-screen">
+    <html lang="ru" className={`${inter.variable} ${montserrat.variable} ${jetbrainsMono.variable} bg-[#121417]`}>
+      <body className="font-sans antialiased min-h-screen noise-bg">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

@@ -45,15 +45,17 @@ export function Navigation() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#121417]/95 backdrop-blur-xl border-b border-[#2A2F38]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <span className="font-serif font-bold text-lg text-foreground tracking-tight">
+          <Link href="/" className="flex items-center gap-2 flex-shrink-0 group">
+            <span className="font-serif font-bold text-lg text-white tracking-tight">
               MASLENNIKOV
             </span>
-            <span className="text-primary font-serif text-lg">ARCHIVE</span>
+            <span className="font-serif text-lg text-[#39FF14] glow-text transition-all group-hover:brightness-125">
+              ARCHIVE
+            </span>
           </Link>
 
           {/* Center Navigation with Search */}
@@ -69,7 +71,7 @@ export function Navigation() {
                   onSubmit={handleSearch}
                   className="relative"
                 >
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#39FF14]" />
                   <input
                     ref={searchInputRef}
                     type="text"
@@ -77,7 +79,7 @@ export function Navigation() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Поиск по архиву..."
-                    className="w-full pl-10 pr-10 py-2 bg-secondary/80 border border-border/50 rounded-full text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50"
+                    className="w-full pl-10 pr-10 py-2 bg-[#1E2229] border border-[#39FF14]/30 rounded-full text-sm text-white placeholder:text-[#A0A5B5] focus:outline-none focus:border-[#39FF14] focus:shadow-[0_0_15px_rgba(57,255,20,0.2)] transition-all"
                   />
                   <button
                     type="button"
@@ -85,7 +87,7 @@ export function Navigation() {
                       setSearchOpen(false)
                       setSearchQuery("")
                     }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A0A5B5] hover:text-white transition-colors"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -101,19 +103,19 @@ export function Navigation() {
                   {/* Search button - positioned before nav items */}
                   <button
                     onClick={() => setSearchOpen(true)}
-                    className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-full transition-all mr-2"
+                    className="flex items-center gap-2 px-3 py-2 text-sm text-[#39FF14] hover:bg-[#39FF14]/10 rounded-full transition-all mr-2 border border-transparent hover:border-[#39FF14]/30"
                   >
                     <Search className="w-4 h-4" />
                     <span>Поиск</span>
                   </button>
 
-                  <div className="w-px h-4 bg-border/50 mx-2" />
+                  <div className="w-px h-4 bg-[#2A2F38] mx-2" />
 
                   {navItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-full transition-all"
+                      className="px-3 py-2 text-sm text-[#A0A5B5] hover:text-white hover:bg-[#1E2229] rounded-full transition-all"
                     >
                       {item.label}
                     </Link>
@@ -127,7 +129,7 @@ export function Navigation() {
           <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="p-2 text-[#39FF14] hover:bg-[#39FF14]/10 rounded-lg transition-colors"
             >
               <Search className="w-5 h-5" />
               <span className="sr-only">Поиск</span>
@@ -135,7 +137,7 @@ export function Navigation() {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="p-2 text-[#A0A5B5] hover:text-white transition-colors"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               <span className="sr-only">Меню</span>
@@ -154,7 +156,7 @@ export function Navigation() {
             >
               <form onSubmit={handleSearch} className="pb-4">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#39FF14]" />
                   <input
                     ref={searchInputRef}
                     type="text"
@@ -162,7 +164,7 @@ export function Navigation() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Поиск по архиву..."
-                    className="w-full pl-10 pr-4 py-2.5 bg-secondary/80 border border-border/50 rounded-full text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    className="w-full pl-10 pr-4 py-2.5 bg-[#1E2229] border border-[#39FF14]/30 rounded-full text-sm text-white placeholder:text-[#A0A5B5] focus:outline-none focus:border-[#39FF14] focus:shadow-[0_0_15px_rgba(57,255,20,0.2)]"
                   />
                 </div>
               </form>
@@ -178,7 +180,7 @@ export function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border/50 overflow-hidden"
+            className="lg:hidden bg-[#121417]/98 backdrop-blur-xl border-b border-[#2A2F38]/50 overflow-hidden"
           >
             <div className="px-4 py-4 space-y-1">
               {navItems.map((item) => (
@@ -186,7 +188,7 @@ export function Navigation() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="block py-2.5 px-3 text-muted-foreground hover:text-foreground hover:bg-secondary/50 rounded-lg transition-colors"
+                  className="block py-2.5 px-3 text-[#A0A5B5] hover:text-white hover:bg-[#1E2229] rounded-lg transition-colors"
                 >
                   {item.label}
                 </Link>

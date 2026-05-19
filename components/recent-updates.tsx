@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Play, Clock, Eye, ArrowRight } from "lucide-react"
+import { Play, Clock, Eye, ArrowRight, Radio } from "lucide-react"
 import Link from "next/link"
 
 interface Video {
@@ -50,8 +50,11 @@ const recentVideos: Video[] = [
 
 export function RecentUpdates() {
   return (
-    <section className="py-24 lg:py-32 bg-card/30">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-24 lg:py-32 bg-[#1E2229]/30 relative">
+      {/* Grid background */}
+      <div className="absolute inset-0 grid-bg opacity-30" />
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -59,16 +62,19 @@ export function RecentUpdates() {
           className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12"
         >
           <div>
-            <h2 className="font-serif font-bold text-3xl sm:text-4xl text-foreground">
+            <div className="inline-flex items-center gap-2 mb-4">
+              <Radio className="w-4 h-4 text-[#39FF14]" />
+              <span className="text-xs font-mono tracking-widest uppercase text-[#39FF14]">
+                LATEST UPLOADS
+              </span>
+            </div>
+            <h2 className="font-serif font-bold text-3xl sm:text-4xl text-white">
               Последние видео
             </h2>
-            <p className="mt-2 text-muted-foreground">
-              Свежий контент
-            </p>
           </div>
           <Link
             href="/videos"
-            className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors group"
+            className="inline-flex items-center gap-2 text-sm text-[#39FF14] hover:brightness-125 transition-all group font-mono"
           >
             Все видео
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -83,36 +89,37 @@ export function RecentUpdates() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -4 }}
               className="group"
             >
               <Link href={`/videos/${video.id}`} className="block">
                 {/* Thumbnail */}
-                <div className="relative aspect-video bg-secondary/50 rounded-xl overflow-hidden mb-3 border border-border/30">
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative aspect-video bg-[#252A32] rounded-xl overflow-hidden mb-3 border border-[#2A2F38] group-hover:border-[#39FF14]/50 transition-all group-hover:shadow-[0_0_20px_rgba(57,255,20,0.15)]">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121417]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   
                   {/* Play button */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-12 h-12 rounded-full bg-primary/90 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-100 scale-90 transition-all">
-                      <Play className="w-5 h-5 text-primary-foreground ml-0.5" />
+                    <div className="w-12 h-12 rounded-full bg-[#39FF14] flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-100 scale-90 transition-all shadow-[0_0_20px_rgba(57,255,20,0.5)]">
+                      <Play className="w-5 h-5 text-[#0A0B0D] ml-0.5" />
                     </div>
                   </div>
 
                   {/* Duration */}
-                  <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-background/90 rounded-md text-xs text-foreground font-medium">
+                  <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-[#121417]/90 rounded text-xs text-white font-mono">
                     {video.duration}
                   </div>
 
                   {/* Category */}
-                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-primary/90 rounded-md text-xs text-primary-foreground font-medium">
+                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-[#39FF14] rounded text-xs text-[#0A0B0D] font-medium">
                     {video.category}
                   </div>
                 </div>
 
                 {/* Info */}
-                <h3 className="font-medium text-foreground line-clamp-2 group-hover:text-primary transition-colors leading-snug">
+                <h3 className="font-medium text-white line-clamp-2 group-hover:text-[#39FF14] transition-colors leading-snug">
                   {video.title}
                 </h3>
-                <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="mt-2 flex items-center gap-3 text-xs text-[#A0A5B5] font-mono">
                   <span className="flex items-center gap-1">
                     <Eye className="w-3 h-3" />
                     {video.views}
