@@ -10,6 +10,5 @@ fi
 
 git add -A
 git commit -m "$message"
-git push origin main
 
-echo "Pushed to GitHub. Vercel will deploy automatically if the project is connected to this repository."
+echo "Committed changes. The post-commit hook will push to GitHub automatically when GitHub auth is configured."

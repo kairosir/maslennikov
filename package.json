@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "push": "sh scripts/push-to-github.sh"
+    "push": "sh scripts/push-to-github.sh",
+    "setup:auto-push": "sh scripts/install-auto-push-hook.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

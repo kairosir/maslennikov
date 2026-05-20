@@ -29,7 +29,7 @@ Recommended settings:
 - Framework Preset: `Next.js`
 - Production Branch: `main`
 - Install Command: `pnpm install`
-- Build Command: `node .v0/inject-built-with-v0.mjs && next build`
+- Build Command: `next build`
 - Output Directory: keep default for Next.js
 
 The repository already contains `vercel.json` with the build command Vercel should use.
