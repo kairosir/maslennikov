@@ -1,7 +1,30 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ChevronDown, Play } from "lucide-react"
+import { ChevronDown, Flame, Play, Sparkles, Star, TrendingUp } from "lucide-react"
+
+const heroStats = [
+  {
+    icon: TrendingUp,
+    value: "12.5M",
+    label: "Подписчиков",
+  },
+  {
+    icon: Flame,
+    value: "2.1B",
+    label: "Просмотров",
+  },
+  {
+    icon: Star,
+    value: "548",
+    label: "Видео",
+  },
+  {
+    icon: Sparkles,
+    value: "12+",
+    label: "Лет на YouTube",
+  },
+]
 
 export function HeroSection() {
   const scrollToTimeline = () => {
@@ -92,20 +115,21 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto"
+          className="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4"
         >
-          {[
-            { value: "12+", label: "Лет творчества" },
-            { value: "500+", label: "Видео" },
-            { value: "10M+", label: "Подписчиков" },
-          ].map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="font-serif font-bold text-2xl sm:text-3xl text-foreground">
-                {stat.value}
+          {heroStats.map((stat, i) => {
+            const Icon = stat.icon
+
+            return (
+              <div key={i} className="rounded-lg border border-border bg-background/45 p-4 text-center backdrop-blur-sm">
+                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary">
+                  <Icon className="h-4 w-4" />
+                </div>
+                <div className="font-serif font-bold text-2xl text-foreground sm:text-3xl">{stat.value}</div>
+                <div className="mt-1 text-xs text-muted-foreground">{stat.label}</div>
               </div>
-              <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
-            </div>
-          ))}
+            )
+          })}
         </motion.div>
       </div>
 

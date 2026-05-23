@@ -7,10 +7,9 @@ import { Search, Menu, X } from "lucide-react"
 
 const navItems = [
   { href: "/", label: "Главная" },
-  { href: "/timeline", label: "Хронология" },
+  { href: "/biography", label: "Биография" },
   { href: "/videos", label: "Все видео" },
   { href: "/gallery", label: "Галерея" },
-  { href: "/biography", label: "Биография" },
   { href: "/facts", label: "Факты" },
   { href: "/about", label: "О проекте" },
 ]

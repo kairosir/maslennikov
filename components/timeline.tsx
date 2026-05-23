@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { Calendar, Eye, Film, MousePointer2, Sparkles, X, ZoomIn } from "lucide-react"
+import { Eye, Film, MousePointer2, Sparkles, X, ZoomIn } from "lucide-react"
 import type { ReactNode } from "react"
 
 type WebEvent = {
@@ -38,15 +38,6 @@ const currentYear = new Date().getFullYear()
 const years = Array.from({ length: currentYear - 2014 + 1 }, (_, index) => 2014 + index)
 
 const webEvents: WebEvent[] = [
-  {
-    id: "first-videos",
-    year: 2014,
-    title: "Первые ролики",
-    type: "turning",
-    description: "Стартовая точка архива: первые эксперименты, голос канала и ранняя монтажная интонация.",
-    frames: ["Канал", "Влог", "Эксперимент"],
-    impact: "Задает центр всей паутины."
-  },
   {
     id: "hide-and-seek",
     year: 2016,
@@ -143,10 +134,10 @@ export function Timeline() {
   const wrapRef = useRef<HTMLDivElement>(null)
   const pointsRef = useRef<ProjectedPoint[]>([])
   const hoveredRef = useRef<ProjectedPoint | null>(null)
-  const selectedEventRef = useRef<WebEvent | null>(webEvents[0])
-  const selectedYearRef = useRef(2014)
-  const [selectedYear, setSelectedYear] = useState<number>(2014)
-  const [selectedEvent, setSelectedEvent] = useState<WebEvent | null>(webEvents[0])
+  const selectedEventRef = useRef<WebEvent | null>(webEvents[0] ?? null)
+  const selectedYearRef = useRef(webEvents[0]?.year ?? 2016)
+  const [selectedYear, setSelectedYear] = useState<number>(webEvents[0]?.year ?? 2016)
+  const [selectedEvent, setSelectedEvent] = useState<WebEvent | null>(webEvents[0] ?? null)
   const [depth, setDepth] = useState(0)
   const [isReducedMotion, setIsReducedMotion] = useState(false)
 
@@ -215,8 +206,8 @@ export function Timeline() {
     }
 
     const buildPoints = (): WebPoint[] => {
-      const ringGap = Math.min(width, height) * 0.045
-      const baseRadius = Math.min(width, height) * 0.08
+      const ringGap = Math.min(width, height) * 0.065
+      const baseRadius = Math.min(width, height) * 0.12
 
       const yearPoints = years.map((year, index) => {
         const angle = -Math.PI / 2 + index * 0.58
@@ -247,7 +238,7 @@ export function Timeline() {
           x: anchor.x + Math.cos(offsetAngle + yearIndex * 0.35) * distance,
           y: anchor.y + Math.sin(offsetAngle + yearIndex * 0.28) * distance * 0.75,
           z: anchor.z + 28 + (index % 3) * 24,
-          radius: selectedEventRef.current?.id === event.id ? 9 : 6,
+          radius: selectedEventRef.current?.id === event.id ? 11 : 7,
           event
         }
       })
@@ -457,7 +448,7 @@ export function Timeline() {
   return (
     <section id="timeline" className="relative overflow-hidden py-24">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(239,68,68,0.13),transparent_34rem)]" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -479,10 +470,10 @@ export function Timeline() {
           </p>
         </motion.div>
 
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="space-y-5">
           <div
             ref={wrapRef}
-            className="relative min-h-[620px] overflow-hidden rounded-lg border border-border bg-black shadow-2xl"
+            className="relative min-h-[720px] overflow-hidden rounded-lg border border-border bg-black shadow-2xl xl:min-h-[780px]"
           >
             <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-label="Интерактивная паутина хронологии" />
             <div className="pointer-events-none absolute left-4 top-4 flex flex-wrap gap-2">
@@ -504,33 +495,29 @@ export function Timeline() {
             </div>
           </div>
 
-          <aside className="space-y-4">
-            <div className="rounded-lg border border-border bg-card p-5">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Выбранный год</p>
-                  <h3 className="mt-1 font-serif text-5xl font-bold text-foreground">{selectedYear}</h3>
-                </div>
-                <Calendar className="h-10 w-10 text-primary" />
-              </div>
-              <div className="mt-4 grid grid-cols-3 gap-2">
-                {years.map((year) => (
-                  <button
-                    key={year}
-                    onClick={() => {
-                      setSelectedYear(year)
-                      setSelectedEvent(webEvents.find((event) => event.year === year) ?? null)
-                      setDepth(Math.max(0, Math.min(1, (year - 2014) / Math.max(years.length - 1, 1))))
-                    }}
-                    className={`rounded-md border px-2 py-2 text-xs transition-colors ${
-                      year === selectedYear
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-secondary/30 text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {year}
-                  </button>
-                ))}
+          <aside className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_420px]">
+            <div className="rounded-lg border border-border bg-card p-5 xl:p-6">
+              <h3 className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
+                <Film className="h-4 w-4 text-primary" />
+                Материалы выбранного года: {selectedYear}
+              </h3>
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {yearEvents.length > 0 ? (
+                  yearEvents.map((event) => (
+                    <button
+                      key={event.id}
+                      onClick={() => setSelectedEvent(event)}
+                      className="w-full rounded-md border border-border bg-secondary/25 p-4 text-left transition-colors hover:bg-secondary"
+                    >
+                      <span className="block text-sm font-medium text-foreground">{event.title}</span>
+                      <span className="mt-1 block text-xs text-muted-foreground">{event.impact}</span>
+                    </button>
+                  ))
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    Для этого года пока нет заполненных событий. Узел года уже готов для будущего контента.
+                  </p>
+                )}
               </div>
             </div>
 
@@ -549,31 +536,6 @@ export function Timeline() {
                 </motion.div>
               )}
             </AnimatePresence>
-
-            <div className="rounded-lg border border-border bg-card p-5">
-              <h3 className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
-                <Film className="h-4 w-4 text-primary" />
-                Ветка {selectedYear}
-              </h3>
-              <div className="space-y-2">
-                {yearEvents.length > 0 ? (
-                  yearEvents.map((event) => (
-                    <button
-                      key={event.id}
-                      onClick={() => setSelectedEvent(event)}
-                      className="w-full rounded-md border border-border bg-secondary/25 p-3 text-left transition-colors hover:bg-secondary"
-                    >
-                      <span className="block text-sm font-medium text-foreground">{event.title}</span>
-                      <span className="mt-1 block text-xs text-muted-foreground">{event.impact}</span>
-                    </button>
-                  ))
-                ) : (
-                  <p className="text-sm text-muted-foreground">
-                    Для этого года пока нет заполненных событий. Узел года уже готов для будущего контента.
-                  </p>
-                )}
-              </div>
-            </div>
           </aside>
         </div>
       </div>
