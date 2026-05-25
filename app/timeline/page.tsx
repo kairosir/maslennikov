@@ -4,7 +4,7 @@ import { Footer } from "@/components/footer"
 
 export const metadata = {
   title: "Хронология | Maslennikov Archive",
-  description: "Полная интерактивная хронология творчества Димы Масленникова с 2014 по 2026 год",
+  description: "Интерактивная хронология творчества Димы Масленникова с 2014 года",
 }
 
 export default function TimelinePage() {

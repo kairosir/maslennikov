@@ -13,26 +13,26 @@ interface Stat {
 const stats: Stat[] = [
   {
     icon: <TrendingUp className="w-5 h-5" />,
-    value: "12.5M",
+    value: "19.7 млн",
     label: "Подписчиков",
-    trend: "+125K за месяц",
+    trend: "Округлённо",
   },
   {
     icon: <Flame className="w-5 h-5" />,
-    value: "2.1B",
+    value: "3.3 млрд+",
     label: "Просмотров",
-    trend: "+50M за месяц",
+    trend: "Более 3.3 млрд",
   },
   {
     icon: <Star className="w-5 h-5" />,
-    value: "548",
-    label: "Видео",
-    trend: "+3 за месяц",
+    value: "465 видео",
+    label: "и 14 Shorts",
+    trend: "По каталогу сайта",
   },
   {
     icon: <Sparkles className="w-5 h-5" />,
-    value: "12",
-    label: "Лет на YouTube",
+    value: "с 2014",
+    label: "9 марта 2014",
   },
 ]
 

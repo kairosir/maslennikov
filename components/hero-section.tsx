@@ -6,23 +6,23 @@ import { ChevronDown, Flame, Sparkles, Star, TrendingUp } from "lucide-react"
 const heroStats = [
   {
     icon: TrendingUp,
-    value: "12.5M",
+    value: "19.7 млн",
     label: "Подписчиков",
   },
   {
     icon: Flame,
-    value: "2.1B",
+    value: "3.3 млрд+",
     label: "Просмотров",
   },
   {
     icon: Star,
-    value: "548",
-    label: "Видео",
+    value: "465 видео",
+    label: "и 14 Shorts",
   },
   {
     icon: Sparkles,
-    value: "12+",
-    label: "Лет на YouTube",
+    value: "с 2014",
+    label: "9 марта 2014",
   },
 ]
 
@@ -65,7 +65,7 @@ export function HeroSection() {
           transition={{ duration: 0.8 }}
         >
           <span className="inline-block px-4 py-1.5 mb-6 text-xs font-medium tracking-wider uppercase text-primary border border-primary/30 rounded-full">
-            Цифровой Архив 2014 — 2026
+            @pognalishow / канал создан 9 марта 2014
           </span>
         </motion.div>
 
@@ -75,9 +75,9 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="font-serif font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight text-balance"
         >
-          <span className="text-foreground">Дима</span>
+          <span className="text-foreground">Maslennikov</span>
           <br />
-          <span className="text-primary">Масленников</span>
+          <span className="text-primary">Archive</span>
         </motion.h1>
 
         <motion.p
@@ -86,7 +86,16 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty"
         >
-          Полная интерактивная энциклопедия творчества. От первых видео до легендарных Заброшки-выпусков.
+          Фан-архив творчества Димы Масленникова.
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.48 }}
+          className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base"
+        >
+          Дима Масленников — российский блогер, сталкер и телеведущий. Известен экстремальными
+          исследованиями заброшенных мест, сложными испытаниями и атмосферным контентом.
         </motion.p>
 
         <motion.a

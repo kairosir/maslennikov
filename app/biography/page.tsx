@@ -4,7 +4,7 @@ import { Calendar, MapPin, Users, Play, Award, Sparkles } from "lucide-react"
 
 export const metadata = {
   title: "Биография | Maslennikov Archive",
-  description: "Полная биография Димы Масленникова - от начала творческого пути до наших дней",
+  description: "Биография Димы Масленникова - от начала творческого пути до наших дней",
 }
 
 const milestones = [
@@ -48,12 +48,12 @@ const milestones = [
 const achievements = [
   {
     icon: Users,
-    value: "12.5M+",
+    value: "19.7 млн",
     label: "Подписчиков на YouTube",
   },
   {
     icon: Play,
-    value: "2.1B+",
+    value: "3.3 млрд+",
     label: "Просмотров",
   },
   {
@@ -63,8 +63,8 @@ const achievements = [
   },
   {
     icon: Sparkles,
-    value: "500+",
-    label: "Видео на канале",
+    value: "465 видео",
+    label: "и 14 Shorts",
   },
 ]
 
@@ -92,9 +92,9 @@ export default function BiographyPage() {
               
               <div>
                 <h2 className="font-serif font-bold text-2xl text-foreground">
-                  Дмитрий Масленников
+                  Дима Масленников
                 </h2>
-                <p className="text-primary mt-1">YouTube-блогер, исследователь, музыкант</p>
+                <p className="text-primary mt-1">YouTube-блогер, сталкер, телеведущий, музыкант</p>
                 
                 <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
                   <span className="flex items-center gap-1">
@@ -104,6 +104,10 @@ export default function BiographyPage() {
                   <span className="flex items-center gap-1">
                     <MapPin className="w-4 h-4" />
                     Москва, Россия
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Play className="w-4 h-4" />
+                    @pognalishow, создан 9 марта 2014
                   </span>
                 </div>
               </div>
@@ -151,7 +155,8 @@ export default function BiographyPage() {
               Начало карьеры
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              В 2014 году Дима создал свой YouTube-канал и начал публиковать первые видео. 
+              9 марта 2014 года был создан YouTube-канал Димы Масленникова, после чего начали
+              появляться первые видео.
               Изначально это были влоги и развлекательный контент, но постепенно формат 
               эволюционировал в сторону более экстремального и исследовательского направления.
             </p>
@@ -190,10 +195,9 @@ export default function BiographyPage() {
               Настоящее время
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-6">
-              Сегодня Дима Масленников — один из самых популярных русскоязычных блогеров 
-              с аудиторией более 12 миллионов подписчиков. Он продолжает развивать серию 
-              Заброшки, экспериментировать с новыми форматами и работать над музыкальными 
-              проектами.
+              Сегодня Дима Масленников — один из самых популярных русскоязычных блогеров
+              с аудиторией около 19.7 млн подписчиков и более 3.3 млрд просмотров. Он продолжает
+              развивать заброшки, экстрим, GhostBuster, музыкальные проекты и форматы с подписчиками.
             </p>
           </section>
 
