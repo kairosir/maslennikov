@@ -20,12 +20,12 @@ const searchData: SearchResult[] = [
   {
     id: "v1",
     type: "video",
-    title: "Abandoned: Заброшенный замок в горах Германии",
+    title: "Заброшки: Заброшенный замок в горах Германии",
     description: "Исследуем загадочный замок, заброшенный более 50 лет назад...",
     highlight: "В этом видео мы отправляемся в заброшенный замок на юге Германии...",
     timestamp: "12:45",
     year: 2025,
-    category: "Abandoned",
+    category: "Заброшки",
   },
   {
     id: "v2",
@@ -45,7 +45,7 @@ const searchData: SearchResult[] = [
     highlight: "Мы нашли документы в заброшенной школе, датированные 1986 годом...",
     timestamp: "28:15",
     year: 2024,
-    category: "Abandoned",
+    category: "Заброшки",
   },
   {
     id: "a1",
@@ -57,14 +57,14 @@ const searchData: SearchResult[] = [
   {
     id: "a2",
     type: "article",
-    title: "История серии Abandoned",
+    title: "История серии Заброшки",
     description: "Как появилась легендарная серия и что её ждёт в будущем",
-    highlight: "Первый выпуск Abandoned вышел в 2019 году и сразу стал хитом...",
+    highlight: "Первый выпуск Заброшки вышел в 2019 году и сразу стал хитом...",
   },
   {
     id: "g1",
     type: "gallery",
-    title: "Фотографии со съёмок Abandoned 2024",
+    title: "Фотографии со съёмок Заброшки 2024",
     description: "Эксклюзивные кадры из-за кулис самых популярных выпусков",
   },
   {
@@ -88,7 +88,7 @@ export function GlobalSearch() {
   const [results, setResults] = useState<SearchResult[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [recentSearches, setRecentSearches] = useState<string[]>([
-    "Abandoned замок",
+    "Заброшки замок",
     "Чернобыль",
     "24 часа челлендж",
   ])
@@ -228,7 +228,7 @@ export function GlobalSearch() {
               Популярные категории
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {["Abandoned", "Экстрим", "Музыка", "Челленджи", "Влог", "Коллаборации"].map(
+              {["Заброшки", "Экстрим", "Музыка", "Челленджи", "Влог", "Коллаборации"].map(
                 (category) => (
                   <a
                     key={category}

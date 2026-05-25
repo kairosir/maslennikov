@@ -86,8 +86,18 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty"
         >
-          Полная интерактивная энциклопедия творчества. От первых видео до легендарных Abandoned-выпусков.
+          Полная интерактивная энциклопедия творчества. От первых видео до легендарных Заброшки-выпусков.
         </motion.p>
+
+        <motion.a
+          href="/about#disclaimer"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.55 }}
+          className="mx-auto mt-5 inline-flex max-w-2xl rounded-full border border-primary/25 bg-primary/10 px-4 py-2 text-xs leading-5 text-muted-foreground transition-colors hover:border-primary/45 hover:text-foreground"
+        >
+          Важная информация: это неофициальный фан-проект. Не связан с Димой Масленниковым и его командой.
+        </motion.a>
 
         {/* Stats */}
         <motion.div

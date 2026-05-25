@@ -21,7 +21,7 @@ const galleryImages: GalleryImage[] = [
   {
     id: "1",
     src: "/placeholder-gallery-1.jpg",
-    title: "Abandoned: Замок Германии - Кадр 1",
+    title: "Заброшки: Замок Германии - Кадр 1",
     year: 2025,
     category: "Съёмки",
     description: "Главный зал заброшенного замка",
@@ -29,7 +29,7 @@ const galleryImages: GalleryImage[] = [
   {
     id: "2",
     src: "/placeholder-gallery-2.jpg",
-    title: "За кадром съёмок Abandoned",
+    title: "За кадром съёмок Заброшки",
     year: 2025,
     category: "За кадром",
     description: "Команда готовится к съёмке",
@@ -52,7 +52,7 @@ const galleryImages: GalleryImage[] = [
   {
     id: "5",
     src: "/placeholder-gallery-5.jpg",
-    title: "Постер Abandoned Season 5",
+    title: "Постер Заброшки Season 5",
     year: 2024,
     category: "Постеры",
   },
@@ -88,7 +88,7 @@ const galleryImages: GalleryImage[] = [
   {
     id: "10",
     src: "/placeholder-gallery-10.jpg",
-    title: "Abandoned - Больница",
+    title: "Заброшки - Больница",
     year: 2023,
     category: "Съёмки",
     description: "Коридор заброшенной больницы",

@@ -16,12 +16,12 @@ interface Video {
 const recentVideos: Video[] = [
   {
     id: "1",
-    title: "Abandoned: Заброшенный замок в горах",
+    title: "Заброшки: Заброшенный замок в горах",
     thumbnail: "/placeholder-video-1.jpg",
     duration: "45:32",
     views: "2.1M",
     date: "2 дня назад",
-    category: "Abandoned",
+    category: "Заброшки",
   },
   {
     id: "2",
@@ -39,7 +39,7 @@ const recentVideos: Video[] = [
     duration: "38:21",
     views: "1.5M",
     date: "1 неделю назад",
-    category: "Abandoned",
+    category: "Заброшки",
   },
   {
     id: "4",

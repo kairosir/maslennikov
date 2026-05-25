@@ -90,12 +90,13 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Maslennikov Archive. Неофициальный фан-проект.
+          <p className="max-w-3xl text-xs leading-5 text-muted-foreground">
+            © {new Date().getFullYear()} Maslennikov Archive. Это неофициальный фан-проект. Не связан с Димой Масленниковым и его командой.
+            Все права на видео, изображения, названия проектов и бренд принадлежат их законным правообладателям.
           </p>
-          <p className="text-xs text-muted-foreground">
-            Создано с любовью к творчеству Димы
-          </p>
+          <Link href="/about#disclaimer" className="text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline">
+            Дисклеймер
+          </Link>
         </div>
       </div>
     </footer>

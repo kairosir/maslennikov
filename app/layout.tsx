@@ -16,7 +16,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: 'Maslennikov Archive | Полная История Димы',
   description: 'Самый полный цифровой архив жизни и творчества Димы Масленникова. Интерактивная хронология, каталог видео, галерея и многое другое.',
-  keywords: ['Дима Масленников', 'Maslennikov', 'архив', 'видео', 'Abandoned', 'YouTube'],
+  keywords: ['Дима Масленников', 'Maslennikov', 'архив', 'видео', 'Заброшки', 'YouTube'],
   openGraph: {
     title: 'Maslennikov Archive | Полная История Димы',
     description: 'Самый полный цифровой архив жизни и творчества Димы Масленникова',

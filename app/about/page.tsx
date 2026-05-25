@@ -3,8 +3,8 @@ import { Footer } from "@/components/footer"
 import { Heart, Code, Users, Mail, Github, MessageCircle } from "lucide-react"
 
 export const metadata = {
-  title: "О проекте | Maslennikov Archive",
-  description: "Информация о проекте Maslennikov Archive - неофициальном фан-архиве Димы Масленникова",
+  title: "О проекте и дисклеймер | Maslennikov Archive",
+  description: "Информация о проекте Maslennikov Archive и дисклеймер неофициального фан-архива",
 }
 
 const features = [
@@ -47,6 +47,9 @@ export default function AboutPage() {
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
               Maslennikov Archive — неофициальный фан-проект, посвящённый творчеству 
               Димы Масленникова
+            </p>
+            <p className="mx-auto mt-4 max-w-2xl rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm leading-6 text-muted-foreground">
+              Это неофициальный фан-проект. Не связан с Димой Масленниковым и его командой.
             </p>
           </header>
 
@@ -101,7 +104,7 @@ export default function AboutPage() {
                 "Галерея фотографий и фан-арта",
                 "Подробная биография",
                 "Малоизвестные факты",
-                "История серии Abandoned",
+                "История серии Заброшки",
                 "Музыкальное творчество",
               ].map((item, index) => (
                 <div
@@ -116,16 +119,23 @@ export default function AboutPage() {
           </section>
 
           {/* Disclaimer */}
-          <section className="mb-16 p-6 bg-primary/5 border border-primary/20 rounded-xl">
-            <h2 className="font-medium text-foreground mb-2">
-              Важное уточнение
+          <section id="disclaimer" className="mb-16 scroll-mt-24 p-6 sm:p-8 bg-primary/5 border border-primary/20 rounded-xl">
+            <h2 className="font-serif font-bold text-2xl text-foreground mb-4">
+              Дисклеймер
             </h2>
-            <p className="text-sm text-muted-foreground">
-              Maslennikov Archive — это неофициальный фан-проект. Мы не связаны с Димой 
-              Масленниковым или его командой. Весь контент собран из открытых источников 
-              и предназначен исключительно для информационных целей. Все права на оригинальный 
-              контент принадлежат их законным владельцам.
-            </p>
+            <div className="space-y-4 text-sm leading-7 text-muted-foreground">
+              <p>
+                Этот сайт является неофициальным фан-проектом, созданным поклонником творчества Димы Масленникова.
+              </p>
+              <p>
+                Сайт не имеет никакого отношения к Диме Масленникову, его команде и компании «ЛИГА».
+                Все авторские права на видео, изображения, названия проектов и бренд принадлежат их законным правообладателям.
+              </p>
+              <p>
+                Контент на сайте используется исключительно в информационных и некоммерческих целях.
+                Мы уважаем интеллектуальную собственность и готовы оперативно удалить любой материал или полностью закрыть проект по первому требованию правообладателей.
+              </p>
+            </div>
           </section>
 
           {/* Contact */}
