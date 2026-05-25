@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ChevronDown, Flame, Play, Sparkles, Star, TrendingUp } from "lucide-react"
+import { ChevronDown, Flame, Sparkles, Star, TrendingUp } from "lucide-react"
 
 const heroStats = [
   {
@@ -88,27 +88,6 @@ export function HeroSection() {
         >
           Полная интерактивная энциклопедия творчества. От первых видео до легендарных Abandoned-выпусков.
         </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <button
-            onClick={scrollToTimeline}
-            className="group flex items-center gap-2 px-8 py-3 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-colors"
-          >
-            <Play className="w-4 h-4" />
-            Начать путешествие
-          </button>
-          <a
-            href="/videos"
-            className="flex items-center gap-2 px-8 py-3 border border-border text-foreground font-medium rounded-lg hover:bg-secondary transition-colors"
-          >
-            Все видео
-          </a>
-        </motion.div>
 
         {/* Stats */}
         <motion.div

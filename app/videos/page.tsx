@@ -1,6 +1,7 @@
 import { Navigation } from "@/components/navigation"
 import { VideoCatalog } from "@/components/video-catalog"
 import { Footer } from "@/components/footer"
+import { Suspense } from "react"
 
 export const metadata = {
   title: "Все видео | Maslennikov Archive",
@@ -12,7 +13,9 @@ export default function VideosPage() {
     <>
       <Navigation />
       <main>
-        <VideoCatalog />
+        <Suspense fallback={null}>
+          <VideoCatalog />
+        </Suspense>
       </main>
       <Footer />
     </>

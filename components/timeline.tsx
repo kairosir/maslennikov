@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { Eye, Film, MousePointer2, Sparkles, X, ZoomIn } from "lucide-react"
+import { ArrowRight, Eye, Film, MousePointer2, Sparkles, X } from "lucide-react"
 import type { ReactNode } from "react"
 
 type WebEvent = {
@@ -129,6 +129,29 @@ const typeStyles = {
   archive: "bg-cyan-400/15 text-cyan-100 border-cyan-300/30"
 }
 
+const yearDescriptions: Record<number, string> = {
+  2014: "Начальная точка паутины: ранние видео, первые зрители и формирование языка будущего архива.",
+  2015: "Период разгона: регулярность, первые устойчивые рубрики и рост фанатской базы.",
+  2016: "Ветка игровых форматов и челленджей: больше динамики, команды и вирусных идей.",
+  2017: "Год масштабирования: ролики-миллионники, эксперименты и заметный рост канала.",
+  2018: "Поворот к мистике и расследованиям: будущая abandoned-эстетика начинает собираться в отдельную линию.",
+  2019: "Abandoned становится главным нервом архива: локации, страх, атмосфера и длинные экспедиции.",
+  2020: "Командная мифология крепнет: появляются устойчивые роли, серии и узнаваемая структура выпусков.",
+  2021: "Продакшен становится плотнее: студийность, свет, монтаж и более сложная упаковка идей.",
+  2022: "Музыкальная ветка отделяется от основной паутины и связывает YouTube с клиповой эстетикой.",
+  2023: "Период перехода и пересборки форматов: архив обрастает новыми связями.",
+  2024: "Новая глава: свежие проекты, возвращение к культовым мотивам и подготовка базы архива.",
+  2025: "Актуальная зона паутины: новые видео, большие форматы и свежие точки входа для зрителей.",
+  2026: "Живая часть архива: сюда будут добавляться новые события, видео и материалы.",
+}
+
+const materialLinks = [
+  { href: "/videos", title: "Все видео", description: "Открыть YouTube-каталог с плеером" },
+  { href: "/biography", title: "Биография", description: "Перейти к истории и контексту" },
+  { href: "/gallery", title: "Галерея", description: "Посмотреть фото и визуальные материалы" },
+  { href: "/facts", title: "Факты", description: "Открыть заметки и малоизвестные детали" },
+]
+
 export function Timeline() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -206,19 +229,19 @@ export function Timeline() {
     }
 
     const buildPoints = (): WebPoint[] => {
-      const ringGap = Math.min(width, height) * 0.065
-      const baseRadius = Math.min(width, height) * 0.12
+      const ringGap = Math.min(width, height) * 0.072
+      const baseRadius = Math.min(width, height) * 0.15
 
       const yearPoints = years.map((year, index) => {
-        const angle = -Math.PI / 2 + index * 0.58
+        const angle = -Math.PI / 2 + index * 0.64
         const radius = baseRadius + index * ringGap
         return {
           id: `year-${year}`,
           kind: "year" as const,
           year,
           title: String(year),
-          x: Math.cos(angle) * radius,
-          y: Math.sin(angle) * radius * 0.68,
+          x: Math.cos(angle) * radius * 1.2,
+          y: Math.sin(angle) * radius * 0.74,
           z: index * 72,
           radius: year === selectedYearRef.current ? 12 : 9
         }
@@ -227,8 +250,8 @@ export function Timeline() {
       const eventPoints = webEvents.map((event, index) => {
         const yearIndex = Math.max(0, event.year - 2014)
         const anchor = yearPoints[yearIndex] ?? yearPoints[yearPoints.length - 1]
-        const offsetAngle = (index % 2 === 0 ? 1 : -1) * (0.62 + (index % 3) * 0.14)
-        const distance = 62 + (index % 4) * 18
+        const offsetAngle = (index % 2 === 0 ? 1 : -1) * (0.76 + (index % 3) * 0.18)
+        const distance = 84 + (index % 4) * 28
 
         return {
           id: event.id,
@@ -341,8 +364,16 @@ export function Timeline() {
       }
 
       for (let i = 0; i < yearPoints.length; i++) {
-        for (let j = i + 2; j < yearPoints.length; j += 4) {
+        for (let j = i + 2; j < yearPoints.length; j += 3) {
           drawLine(yearPoints[i], yearPoints[j], "rgba(255,135,68,ALPHA)", 0.045, 0.75, time)
+        }
+      }
+
+      for (let i = 0; i < eventPoints.length; i++) {
+        for (let j = i + 1; j < eventPoints.length; j++) {
+          if (Math.abs(eventPoints[i].year - eventPoints[j].year) <= 2 && (i + j) % 3 === 0) {
+            drawLine(eventPoints[i], eventPoints[j], "rgba(148,221,255,ALPHA)", 0.055, 0.65, time)
+          }
         }
       }
 
@@ -410,18 +441,6 @@ export function Timeline() {
       setDepth(Math.max(0, Math.min(1, (hit.year - 2014) / Math.max(years.length - 1, 1))))
     }
 
-    const zoomWeb = (event: WheelEvent) => {
-      if (!event.shiftKey && Math.abs(event.deltaY) < 4) {
-        return
-      }
-
-      event.preventDefault()
-      targetDepth = Math.max(0, Math.min(1, targetDepth + event.deltaY * 0.0009))
-      setDepth(targetDepth)
-      const nextYear = years[Math.min(years.length - 1, Math.round(targetDepth * (years.length - 1)))]
-      setSelectedYear(nextYear)
-    }
-
     resize()
     const observer = new ResizeObserver(resize)
     observer.observe(wrap)
@@ -432,7 +451,6 @@ export function Timeline() {
 
     canvas.addEventListener("mouseleave", leaveCanvas)
     canvas.addEventListener("click", clickNode)
-    canvas.addEventListener("wheel", zoomWeb, { passive: false })
     animationFrame = requestAnimationFrame(draw)
 
     return () => {
@@ -440,7 +458,6 @@ export function Timeline() {
       canvas.removeEventListener("mousemove", updateHover)
       canvas.removeEventListener("mouseleave", leaveCanvas)
       canvas.removeEventListener("click", clickNode)
-      canvas.removeEventListener("wheel", zoomWeb)
       cancelAnimationFrame(animationFrame)
     }
   }, [depth, isReducedMotion])
@@ -477,8 +494,7 @@ export function Timeline() {
           >
             <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-label="Интерактивная паутина хронологии" />
             <div className="pointer-events-none absolute left-4 top-4 flex flex-wrap gap-2">
-              <Hint icon={<MousePointer2 className="h-3.5 w-3.5" />} text="Наведи на узел" />
-              <Hint icon={<ZoomIn className="h-3.5 w-3.5" />} text="Колесо мыши приближает годы" />
+              <Hint icon={<MousePointer2 className="h-3.5 w-3.5" />} text="Наведи и кликни по узлу" />
             </div>
             <div className="pointer-events-none absolute bottom-4 left-4 right-4">
               <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
@@ -501,23 +517,37 @@ export function Timeline() {
                 <Film className="h-4 w-4 text-primary" />
                 Материалы выбранного года: {selectedYear}
               </h3>
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {yearEvents.length > 0 ? (
-                  yearEvents.map((event) => (
+              <p className="max-w-3xl text-sm leading-7 text-muted-foreground">
+                {yearDescriptions[selectedYear] ?? "Год уже есть в паутине. Контент для него можно расширить видео, фактами и галереей."}
+              </p>
+              {yearEvents.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {yearEvents.map((event) => (
                     <button
                       key={event.id}
+                      type="button"
                       onClick={() => setSelectedEvent(event)}
-                      className="w-full rounded-md border border-border bg-secondary/25 p-4 text-left transition-colors hover:bg-secondary"
+                      className="rounded-full border border-border bg-secondary/30 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      <span className="block text-sm font-medium text-foreground">{event.title}</span>
-                      <span className="mt-1 block text-xs text-muted-foreground">{event.impact}</span>
+                      {event.title}
                     </button>
-                  ))
-                ) : (
-                  <p className="text-sm text-muted-foreground">
-                    Для этого года пока нет заполненных событий. Узел года уже готов для будущего контента.
-                  </p>
-                )}
+                  ))}
+                </div>
+              )}
+              <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                {materialLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="group rounded-md border border-border bg-secondary/20 p-4 transition-colors hover:border-primary/40 hover:bg-secondary"
+                  >
+                    <span className="flex items-center justify-between gap-3 text-sm font-medium text-foreground">
+                      {link.title}
+                      <ArrowRight className="h-4 w-4 text-muted-foreground transition group-hover:text-primary" />
+                    </span>
+                    <span className="mt-2 block text-xs leading-5 text-muted-foreground">{link.description}</span>
+                  </a>
+                ))}
               </div>
             </div>
 
